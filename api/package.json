@@ -1,0 +1,7 @@
+{
+  "name": "angular-material",
+  "version": "0.0.1",
+  "devDependencies": {
+    "dominion": "git+https://github.com/yura-chaikovsky/dominion.git"
+  }
+}
