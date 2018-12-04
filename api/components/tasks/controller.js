@@ -6,12 +6,7 @@ const TasksController = {
 
     path: TasksFactory.__model__.name,
 
-    permissions: {
-        GET: 'Tasks.Read',
-        POST: 'Tasks.Create',
-        PUT: 'Tasks.Update',
-        DELETE: 'Tasks.Delete'
-    },
+    permissions: {},
 
     GET : [
         // tasks

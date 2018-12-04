@@ -1,7 +1,8 @@
 {
   "name": "angular-material",
   "version": "0.0.1",
+  "devDependencies": {},
   "dependencies": {
-    "dominion": "git+https://github.com/yura-chaikovsky/dominion.git"
+    "mysql2": "^1.6.4"
   }
 }

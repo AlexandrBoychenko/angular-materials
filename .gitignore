@@ -1,1 +1,4 @@
+syntax: glob
 .idea/*
+node_modules
+api/config/config.prod.js

@@ -4,12 +4,7 @@ module.exports = {
         port: 3000
     },
 
-    database: {
-        host: 'mysql',
-        user: 'root',
-        password: 'root',
-        database: 'todo'
-    },
+    database: "mysql://root:root@localhost/todo",
 
     router: {
         // e.g. api/v2/

@@ -11,7 +11,7 @@ const TasksDefinition = {
     properties: {
         id: Property.number(),
         description: Property.string(),
-        creation_date: Property.number()
+        date: Property.number()
     },
 
     factory: {},
