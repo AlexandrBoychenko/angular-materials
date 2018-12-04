@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "devDependencies": {},
   "dependencies": {
-    "mysql2": "^1.6.4"
+    "node-static": "latest",
+    "@angular/material": "latest"
   }
 }
