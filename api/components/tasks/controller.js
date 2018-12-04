@@ -40,7 +40,6 @@ const TasksController = {
 
             return TasksFactory.get({id: tasksId})
                 .then((task)=> {
-                    task.addItem(this.request.body);
                     task.populate(this.request.body);
                     return task.save();
                 });
