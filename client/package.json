@@ -4,6 +4,13 @@
   "devDependencies": {},
   "dependencies": {
     "node-static": "latest",
-    "@angular/material": "latest"
+    "@angular/cli": "latest",
+    "@angular/material": "latest",
+    "@angular/cdk": "latest",
+    "@angular/animations": "latest"
+  },
+
+  "scripts": {
+    "preinstall": "npm i -g @angular/cli --save @angular/material @angular/cdk @angular/animations"
   }
 }
