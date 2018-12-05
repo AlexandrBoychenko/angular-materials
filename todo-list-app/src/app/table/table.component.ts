@@ -1,11 +1,13 @@
 import { Component, OnInit} from '@angular/core';
 import { HttpService } from '../http.service';
 import { Tasks } from '../tasks';
+import { TasksDate } from '../tasksDate';
 
 export interface PeriodicElement {
   id: number;
   description: string;
-  date: number;
+  date: string;
+  action: void
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [];
@@ -21,7 +23,7 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 })
 export class TableComponent implements OnInit {
 
-  tasks: Tasks;
+  tasks: TasksDate;
 
   constructor(private httpService: HttpService){
     this.getElementData().then((elementsData: []) => {
@@ -31,21 +33,26 @@ export class TableComponent implements OnInit {
 
   dataSource: [];
 
-  displayedColumns: string[] = ['id', 'description', 'date'];
+  displayedColumns: string[] = ['id', 'description', 'date', 'actions'];
 
-
-
-  ngOnInit(){
-    console.log(this.dataSource);
-
-  }
+  ngOnInit(){}
 
   getElementData() {
     return new Promise((res, rej) => {
       this.httpService.getData().subscribe((data: []) => {
         data.forEach((item: Tasks) => {
 
-          this.tasks = item;
+          let stringDate: string = new Date(item['date'].toString()).toDateString();
+
+          let {id, description} = item;
+
+          this.tasks = {
+            id: id,
+            description: description,
+            date: stringDate,
+            action: undefined
+          };
+
           ELEMENT_DATA.push(this.tasks);
         });
         res(ELEMENT_DATA)

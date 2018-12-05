@@ -1,6 +1,6 @@
-export class Tasks {
+export class TasksDate {
   id: number;
   description: string;
-  date: number;
+  date: string;
   action: void;
 }
