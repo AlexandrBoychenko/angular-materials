@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable} from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Tasks } from './tasks';
 
 @Injectable()
@@ -13,9 +13,10 @@ export class HttpService{
   }
 
   postData(tasks: Tasks){
+    const headers = new HttpHeaders()
+      .set("Content-Type",  "application/json");
 
     const body = JSON.stringify({description: tasks.description, date: tasks.date});
-    console.log(body);
-    return this.http.post(this.url, body);
+    return this.http.post(this.url, body, {headers});
   }
 }
