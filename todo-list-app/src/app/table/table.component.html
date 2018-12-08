@@ -1,8 +1,3 @@
-<div *ngIf="done">
-  <div>Получено от сервера:</div>
-  <div>Id: {{receivedTask.id}}</div>
-  <div>Текст задачи: {{receivedTask.description}}</div>
-</div>
 <mat-sidenav-container class="example-container" [ngClass]="{visibility: invisile}">
   <mat-sidenav mode="side" opened>
     <div class="nav-close">
@@ -15,7 +10,7 @@
   <mat-sidenav-content></mat-sidenav-content>
 </mat-sidenav-container>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="[dataSource].length">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->

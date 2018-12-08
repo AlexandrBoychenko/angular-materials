@@ -9,7 +9,7 @@ const TasksDefinition = {
     repository: TasksRepository,
 
     properties: {
-        id: Property.number(),
+        id: Property.id(),
         description: Property.string(),
         date: Property.number()
     },

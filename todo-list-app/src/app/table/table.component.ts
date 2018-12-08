@@ -45,7 +45,7 @@ export class TableComponent implements OnInit {
       this.httpService.getData().subscribe((data: []) => {
         data.forEach((item: Tasks) => {
 
-          let stringDate: string = new Date(item['date'].toString()).toDateString();
+          let stringDate: string = new Date(item['date']).toDateString();
 
           let {id, description} = item;
 
@@ -55,11 +55,25 @@ export class TableComponent implements OnInit {
             date: stringDate,
             action: undefined
           };
-          console.log(this.tasks);
-
           ELEMENT_DATA.push(this.tasks);
         });
         this.dataSource = ELEMENT_DATA;
+      });
+  }
+
+  getElementById(id): any{
+    this.httpService.getDataById(id).subscribe((data: Tasks) => {
+
+        let stringDate: string = new Date(data['date']).toDateString();
+
+        let {id, description} = data;
+
+        return {
+          id: id,
+          description: description,
+          date: stringDate,
+          action: undefined
+        };
       });
   }
 
@@ -73,11 +87,8 @@ export class TableComponent implements OnInit {
     this.httpService.postData(tasks)
       .subscribe(
         (data: Tasks) => {
-          this.receivedTask = data;
-          this.done = true;
-          // this.getElementData();
+          return this.getElementById(data.id);
         },
         error => console.log(error)
-      )
-  }
+      )}
 }

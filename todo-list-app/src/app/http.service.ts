@@ -28,11 +28,15 @@ export class HttpService{
     return this.http.get(this.url)
   }
 
+  getDataById(id) {
+    return this.http.get(this.url + '/' + id)
+  }
+
   postData(tasks: Tasks): Observable<Tasks>{
     const headers = new HttpHeaders()
       .set("Content-Type",  "application/json");
 
-    const body = JSON.stringify({description: tasks.description, date: tasks.date});
+    const body = JSON.stringify({description: tasks.description});
     return this.http.post<Tasks>(this.url, body, {headers})
       .pipe(
       tap((tasks: Tasks) => this.log(`added hero w/ id=${tasks.id}`)),
