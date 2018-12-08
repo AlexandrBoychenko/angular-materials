@@ -21,24 +21,24 @@ const ELEMENT_DATA: PeriodicElement[] = [];
   templateUrl: 'table.component.html',
   providers: [HttpService]
 })
+
 export class TableComponent implements OnInit {
 
   tasks: TasksDate;
 
-  constructor(private httpService: HttpService){
-    this.getElementData().then((elementsData: []) => {
-      this.dataSource = elementsData
-    });
-  }
+  tasksTest: string[] = ['стабильный'];
 
-  dataSource: [];
+  dataSource: Tasks[];
+
+  constructor(private httpService: HttpService){}
 
   displayedColumns: string[] = ['id', 'description', 'date', 'actions'];
 
-  ngOnInit(){}
+  ngOnInit(){
+    this.getElementData();
+  }
 
-  getElementData() {
-    return new Promise((res, rej) => {
+  getElementData(): void{
       this.httpService.getData().subscribe((data: []) => {
         data.forEach((item: Tasks) => {
 
@@ -55,8 +55,7 @@ export class TableComponent implements OnInit {
 
           ELEMENT_DATA.push(this.tasks);
         });
-        res(ELEMENT_DATA)
+        this.dataSource = ELEMENT_DATA;
       });
-    })
   }
 }

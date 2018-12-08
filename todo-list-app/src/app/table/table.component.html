@@ -1,4 +1,9 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<ul class="heroes">
+  <li *ngFor="let hero of tasksTest">
+      <span class="badge">{{hero}}</span>
+  </li>
+</ul>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="[dataSource].length">
 
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
