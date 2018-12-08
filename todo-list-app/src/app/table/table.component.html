@@ -1,8 +1,20 @@
-<ul class="heroes">
-  <li *ngFor="let hero of tasksTest">
-      <span class="badge">{{hero}}</span>
-  </li>
-</ul>
+<div *ngIf="done">
+  <div>Получено от сервера:</div>
+  <div>Id: {{receivedTask.id}}</div>
+  <div>Текст задачи: {{receivedTask.description}}</div>
+</div>
+<mat-sidenav-container class="example-container" [ngClass]="{visibility: invisile}">
+  <mat-sidenav mode="side" opened>
+    <div class="nav-close">
+      <div class="close-text">Закрыть</div>
+      <mat-icon class="mat-close" (click)="onClose()">close</mat-icon></div>
+    <div class="add-task">Добавление задачи:</div>
+    <textarea class="form-control" [(ngModel)]="tasks.description" name="task-input" cols="60%" rows="10" ></textarea>
+    <button mat-button (click)="submit(tasks)">Добавить</button>
+  </mat-sidenav>
+  <mat-sidenav-content></mat-sidenav-content>
+</mat-sidenav-container>
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="[dataSource].length">
 
   <!--- Note that these columns can be defined in any order.

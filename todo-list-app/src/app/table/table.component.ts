@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { HttpService } from '../http.service';
 import { Tasks } from '../tasks';
-import { TasksDate } from '../tasksDate';
 
 export interface PeriodicElement {
   id: number;
@@ -23,8 +22,12 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 })
 
 export class TableComponent implements OnInit {
+  tasks: Tasks = new Tasks(); // данные вводимого пользователя
 
-  tasks: TasksDate;
+  receivedTask: Tasks; // полученный пользователь
+  done: boolean = false;
+  invisile: boolean;
+  date: object;
 
   tasksTest: string[] = ['стабильный'];
 
@@ -52,10 +55,29 @@ export class TableComponent implements OnInit {
             date: stringDate,
             action: undefined
           };
+          console.log(this.tasks);
 
           ELEMENT_DATA.push(this.tasks);
         });
         this.dataSource = ELEMENT_DATA;
       });
+  }
+
+  onClose(){
+    document.querySelector('mat-sidenav-container').classList.add('visibility');
+    this.invisile = true;
+  }
+
+  submit(tasks: Tasks){
+
+    this.httpService.postData(tasks)
+      .subscribe(
+        (data: Tasks) => {
+          this.receivedTask = data;
+          this.done = true;
+          // this.getElementData();
+        },
+        error => console.log(error)
+      )
   }
 }

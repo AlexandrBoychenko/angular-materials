@@ -11,13 +11,11 @@ import { FormsModule }   from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { TableComponent } from './table/table.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TableComponent,
-    SidenavComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

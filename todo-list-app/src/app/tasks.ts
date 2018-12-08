@@ -1,3 +1,6 @@
 export class Tasks {
-  [key: string]: any;
+  id: number;
+  description: string;
+  date: string;
+  action: void
 }
