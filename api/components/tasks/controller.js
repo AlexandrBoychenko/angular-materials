@@ -10,7 +10,7 @@ const TasksController = {
 
     GET : [
         // tasks
-        function (limit = 100, offset = 0) {
+        function (limit = 1000, offset = 0) {
             return TasksFactory.find({}, limit, offset);
         },
 

@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService} from './messages.service';
+import { PeriodicElement } from './table/table.component'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -39,8 +40,8 @@ export class HttpService{
     const body = JSON.stringify({description: tasks.description});
     return this.http.post<Tasks>(this.url, body, {headers})
       .pipe(
-      tap((tasks: Tasks) => this.log(`added hero w/ id=${tasks.id}`)),
-      catchError(this.handleError<Tasks>('addHero'))
+      tap((tasks: Tasks) => this.log(`added task w/ id=${tasks.id}`)),
+      catchError(this.handleError<Tasks>('addTask'))
     );
   }
 

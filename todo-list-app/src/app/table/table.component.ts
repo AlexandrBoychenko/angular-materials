@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpService } from '../http.service';
 import { Tasks } from '../tasks';
 
@@ -24,16 +24,12 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 export class TableComponent implements OnInit {
   tasks: Tasks = new Tasks(); // данные вводимого пользователя
 
-  receivedTask: Tasks; // полученный пользователь
-  done: boolean = false;
   invisile: boolean;
   date: object;
 
-  tasksTest: string[] = ['стабильный'];
-
   dataSource: Tasks[];
 
-  constructor(private httpService: HttpService){}
+  constructor(private httpService: HttpService, private changeDetectorRef: ChangeDetectorRef){}
 
   displayedColumns: string[] = ['id', 'description', 'date', 'actions'];
 
@@ -41,7 +37,7 @@ export class TableComponent implements OnInit {
     this.getElementData();
   }
 
-  getElementData(): void{
+  getElementData(): any{
       this.httpService.getData().subscribe((data: []) => {
         data.forEach((item: Tasks) => {
 
@@ -57,23 +53,33 @@ export class TableComponent implements OnInit {
           };
           ELEMENT_DATA.push(this.tasks);
         });
+
+        this.tasks = {
+          id: undefined,
+          description: undefined,
+          date: undefined,
+          action: undefined
+        };
         this.dataSource = ELEMENT_DATA;
       });
   }
 
-  getElementById(id): any{
+  addElementById(id): any{
     this.httpService.getDataById(id).subscribe((data: Tasks) => {
 
-        let stringDate: string = new Date(data['date']).toDateString();
+      let stringDate: string = new Date(data['date']).toDateString();
 
-        let {id, description} = data;
+      let {id, description} = data;
 
-        return {
-          id: id,
-          description: description,
-          date: stringDate,
-          action: undefined
-        };
+      let taskObject = {
+        id: id,
+        description: description,
+        date: stringDate,
+        action: undefined
+      };
+
+      this.dataSource.push(taskObject);
+      this.dataSource = [...this.dataSource];
       });
   }
 
@@ -87,8 +93,9 @@ export class TableComponent implements OnInit {
     this.httpService.postData(tasks)
       .subscribe(
         (data: Tasks) => {
-          return this.getElementById(data.id);
+          this.addElementById(data.id);
         },
         error => console.log(error)
-      )}
+      )
+  }
 }
