@@ -6,6 +6,7 @@
   right: 0;
   background: #eee;
   width: 39%;
+  display: none;
   border-bottom: 1px solid #dcdcdc;
 }
 
@@ -33,7 +34,19 @@ mat-sidenav[mode="side"] {
 }
 
 .visibility {
-  display: none;
+  display: block;
+}
+
+.editVisibility {
+  display: inline-block;
+}
+
+.visible {
+  display: block
+}
+
+.invisible {
+  display: none
 }
 
 textarea { resize: vertical; }
@@ -49,4 +62,10 @@ table {
 
 mat-icon:hover {
   cursor: pointer;
+}
+
+.create-icon {
+  margin-left: 5%;
+  display: none;
+  position: absolute;
 }

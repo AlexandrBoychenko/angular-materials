@@ -7,15 +7,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from "@angular/material/icon";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FormsModule }   from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material';
 
 
 import { AppComponent } from './app.component';
 import { TableComponent } from './table/table.component';
+import { SnackBarComponent } from './snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TableComponent
+    TableComponent,
+    SnackBarComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,8 @@ import { TableComponent } from './table/table.component';
     MatTableModule,
     MatIconModule,
     MatSidenavModule,
-    FormsModule
+    FormsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

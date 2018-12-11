@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,6 @@ export class AppComponent {
   title = 'todo-list-app';
 
   onOpen() {
-    document.querySelector('mat-sidenav-container').classList.remove('visibility');
+    document.querySelector('mat-sidenav-container').classList.add('visibility');
   }
 }

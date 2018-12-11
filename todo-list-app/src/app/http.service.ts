@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService} from './messages.service';
-import { PeriodicElement } from './table/table.component'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

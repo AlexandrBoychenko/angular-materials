@@ -1,5 +1,6 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {HttpService} from '../http.service';
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../http.service';
+
 import {Tasks} from '../tasks';
 
 export interface PeriodicElement {
@@ -24,12 +25,14 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 export class TableComponent implements OnInit {
   tasks: Tasks = new Tasks(); // данные вводимого пользователя
 
-  invisile: boolean;
+  visibility: boolean;
+  editVisibility: boolean;
   date: object;
+  exclamation: boolean;
 
   dataSource: Tasks[];
 
-  constructor(private httpService: HttpService, private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private httpService: HttpService) {
   }
 
   displayedColumns: string[] = ['id', 'description', 'date', 'actions'];
@@ -85,8 +88,8 @@ export class TableComponent implements OnInit {
   }
 
   onClose() {
-    document.querySelector('mat-sidenav-container').classList.add('visibility');
-    this.invisile = true;
+    document.querySelector('mat-sidenav-container').classList.remove('visibility');
+    this.visibility = false;
   }
 
   submit(tasks: Tasks) {
@@ -97,12 +100,30 @@ export class TableComponent implements OnInit {
           this.addElementById(data.id);
         },
         error => console.log(error)
-      )
+      );
+
+    if (~this.tasks.description.indexOf('!')) {
+      this.exclamation = true;
+      document.querySelector('snack-bar-container').setAttribute("style", "display:block");
+    } else {
+      this.exclamation = false;
+      document.querySelector('snack-bar-container').setAttribute("style", "display:none");
+    }
   }
 
   getDate(data): string {
     let currentDate = new Date(data['date']);
     return currentDate.toDateString() + ' time: ' + currentDate.getUTCHours() + ':'
       + currentDate.getUTCMinutes() + ':' + currentDate.getUTCSeconds();
+  }
+
+  onMouseEnter(event) {
+    event.target.querySelector('.create-icon').setAttribute('style', 'display:inline-block');
+    this.editVisibility = true;
+  }
+
+  onMouseLeave(event) {
+    event.target.querySelector('.create-icon').setAttribute('style', 'display:none');
+    this.editVisibility = false;
   }
 }
