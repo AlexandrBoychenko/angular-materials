@@ -15,6 +15,8 @@ const httpOptions = {
 
 export class HttpService{
   url: string = 'http://localhost:3000/tasks';
+  headers: HttpHeaders = new HttpHeaders()
+  .set("Content-Type",  "application/json");
 
   constructor(
     private http: HttpClient,
@@ -33,15 +35,35 @@ export class HttpService{
   }
 
   postData(tasks: Tasks): Observable<Tasks>{
-    const headers = new HttpHeaders()
-      .set("Content-Type",  "application/json");
 
-    const body = JSON.stringify({description: tasks.description});
-    return this.http.post<Tasks>(this.url, body, {headers})
+    const body = this.stringify(tasks);
+    return this.http.post<Tasks>(this.url, body, httpOptions)
       .pipe(
       tap((tasks: Tasks) => this.log(`added task w/ id=${tasks.id}`)),
       catchError(this.handleError<Tasks>('addTask'))
     );
+  }
+
+  putData(tasks: Tasks, id: number): Observable<Tasks>{
+
+    const body = this.stringify(tasks);
+    return this.http.put<Tasks>(this.url + '/' + id, body, httpOptions)
+      .pipe(
+        tap((tasks: Tasks) => this.log(`edited task w/ id=${tasks.id}`)),
+        catchError(this.handleError<Tasks>('editTask'))
+      );
+  }
+
+  deleteData(id: number) {
+    return this.http.delete<Tasks>(this.url + '/' + id)
+      .pipe(
+        tap((tasks: Tasks) => this.log(`deleted task w/ id=${id}`)),
+        catchError(this.handleError<Tasks>('deleteTask'))
+      );
+  }
+
+  stringify(object) {
+    return JSON.stringify({description: object.description})
   }
 
   private handleError<T> (operation = 'operation', result?: T) {

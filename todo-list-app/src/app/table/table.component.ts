@@ -33,6 +33,7 @@ export class TableComponent implements OnInit {
   date: object;
   exclamation: boolean;
   dialogRef: any;
+  currentId: number;
 
   dataSource: Tasks[];
 
@@ -115,6 +116,16 @@ export class TableComponent implements OnInit {
     }
   }
 
+  deleteElement(event) {
+    this.currentId = this.getDataFromHTML(event).id;
+
+    this.httpService.deleteData(this.currentId)
+      .subscribe(
+        answer => this.findByIdAndRemove(this.currentId),
+        error => console.log(error)
+    );
+  }
+
   getDate(data): string {
     let currentDate = new Date(data['date']);
     return currentDate.toDateString() + ' time: ' + currentDate.getUTCHours() + ':'
@@ -131,19 +142,14 @@ export class TableComponent implements OnInit {
     this.editVisibility = false;
   }
 
-  openDialog() {
+  openDialog(event) {
 
     const dialogConfig = new MatDialogConfig();
 
-    //dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
 
-    dialogConfig.data = {
-      id: 1,
-      description: '3435'
-    };
-
-
+    dialogConfig.data = this.getDataFromHTML(event);
 
     this.dialogRef = this.dialog.open(DialogComponent, dialogConfig);;
 
@@ -151,7 +157,41 @@ export class TableComponent implements OnInit {
       data => {
         console.log("Dialog output:", data);
         this.dialogRef.close();
+
+        this.httpService.putData(data, dialogConfig.data.id)
+          .subscribe(
+            (data: Tasks) => {
+              this.findByIdAndReplace(data);
+            },
+            error => console.log(error)
+          );
       }
     );
+  }
+
+  findByIdAndReplace(data: Tasks) {
+    this.dataSource.forEach((element) => {
+      if (element.id === data.id) {
+        element.description = data.description;
+      }
+    });
+    this.dataSource = [...this.dataSource];
+  }
+
+  findByIdAndRemove(id) {
+    for (let i = 0; i < this.dataSource.length; i++) {
+      if (this.dataSource[i]['id'] == id) {
+        this.dataSource.splice(i, 1);
+        this.dataSource = [...this.dataSource];
+        return
+      }
+    }
+  }
+
+  getDataFromHTML(event) {
+    return {
+      id: event.target.attributes.id.value,
+      description: event.currentTarget.parentNode.childNodes[0].nodeValue
+    }
   }
 }
