@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { DialogComponent } from '../dialog/dialog.component';
+
 
 import {Tasks} from '../tasks';
 
@@ -32,7 +35,7 @@ export class TableComponent implements OnInit {
 
   dataSource: Tasks[];
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private dialog: MatDialog) {
   }
 
   displayedColumns: string[] = ['id', 'description', 'date', 'actions'];
@@ -125,5 +128,27 @@ export class TableComponent implements OnInit {
   onMouseLeave(event) {
     event.target.querySelector('.create-icon').setAttribute('style', 'display:none');
     this.editVisibility = false;
+  }
+
+  openDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    //dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.panelClass = "dialogCustom";
+
+    dialogConfig.data = {
+      id: 1,
+      description: 'Редактирование задания'
+    };
+
+    this.dialog.open(DialogComponent, dialogConfig);
+
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => console.log("Dialog output:", data)
+    );
   }
 }

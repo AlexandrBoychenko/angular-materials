@@ -6,19 +6,23 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from "@angular/material/icon";
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { FormsModule }   from '@angular/forms';
+import {ReactiveFormsModule, FormsModule, FormBuilder, FormGroup}   from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
 
 
 import { AppComponent } from './app.component';
 import { TableComponent } from './table/table.component';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -28,10 +32,14 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
     MatTableModule,
     MatIconModule,
     MatSidenavModule,
+    MatSnackBarModule,
+    MatDialogModule,
     FormsModule,
-    MatSnackBarModule
+    ReactiveFormsModule,
+    MatInputModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponent]
 })
 export class AppModule { }

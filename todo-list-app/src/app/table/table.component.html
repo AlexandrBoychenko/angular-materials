@@ -28,7 +28,7 @@
     <th mat-header-row *matHeaderCellDef> Текст задачи </th>
     <td mat-cell (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)" *matCellDef="let element">
       {{element.description}}
-      <mat-icon [ngClass]="{editVisibility: editVisibility}" class="create-icon">create</mat-icon>
+      <mat-icon [ngClass]="{editVisibility: editVisibility}" class="create-icon" (click)="openDialog()">create</mat-icon>
     </td>
   </ng-container>
 
