@@ -32,6 +32,7 @@ export class TableComponent implements OnInit {
   editVisibility: boolean;
   date: object;
   exclamation: boolean;
+  dialogRef: any;
 
   dataSource: Tasks[];
 
@@ -136,19 +137,21 @@ export class TableComponent implements OnInit {
 
     //dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.panelClass = "dialogCustom";
 
     dialogConfig.data = {
       id: 1,
-      description: 'Редактирование задания'
+      description: '3435'
     };
 
-    this.dialog.open(DialogComponent, dialogConfig);
 
-    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(
-      data => console.log("Dialog output:", data)
+    this.dialogRef = this.dialog.open(DialogComponent, dialogConfig);;
+
+    this.dialogRef.afterClosed().subscribe(
+      data => {
+        console.log("Dialog output:", data);
+        this.dialogRef.close();
+      }
     );
   }
 }
