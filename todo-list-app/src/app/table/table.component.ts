@@ -171,17 +171,19 @@ export class TableComponent implements OnInit {
 
     dialogConfig.data = this.getDataFromHTML(event);
 
-    this.dialogRef = this.dialog.open(DialogComponent, dialogConfig);;
+    this.dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     this.dialogRef.afterClosed().subscribe(
       data => {
         console.log("Dialog output:", data);
         this.dialogRef.close();
 
+        this.spinnerView = false;
         this.httpService.putData(data, dialogConfig.data.id)
           .subscribe(
             (data: Tasks) => {
               this.findByIdAndReplace(data);
+              this.spinnerView = true;
             },
             error => console.log(error)
           );
