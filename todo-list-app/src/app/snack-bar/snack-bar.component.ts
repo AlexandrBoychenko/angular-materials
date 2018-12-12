@@ -15,7 +15,7 @@ export class SnackBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.openSnackBar("Эй чувак!");
+    this.openSnackBar("Ошибка, в тексте присутствует восклицательный знак!");
     document.querySelector('snack-bar-container').setAttribute("style", "display:none");
   }
 }

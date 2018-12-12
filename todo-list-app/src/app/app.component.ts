@@ -7,8 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'todo-list-app';
-
-  onOpen() {
-    document.querySelector('mat-sidenav-container').classList.add('visibility');
-  }
 }

@@ -1,3 +1,11 @@
+.nav-pan {
+  text-align: center;
+}
+
+.mat-button {
+  margin: 2rem;
+}
+
 .example-container {
   position: absolute;
   top: 0;
@@ -8,7 +16,6 @@
   width: 39%;
   height: 100vh;
   overflow: visible;
-  display: none;
   border-bottom: 1px solid #dcdcdc;
 }
 
@@ -43,14 +50,6 @@ mat-sidenav[mode="side"] {
   display: inline-block;
 }
 
-.visible {
-  display: block
-}
-
-.invisible {
-  display: none
-}
-
 textarea { resize: vertical; }
 
 
@@ -74,4 +73,16 @@ mat-icon:hover {
 
 .mat-toolbar {
   margin-bottom: 5%;
+}
+
+.mat-spinner {
+  margin-left: 46%;
+}
+
+.spinnerView {
+  display: none;
+}
+
+.visibility {
+  display: none;
 }

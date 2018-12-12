@@ -28,7 +28,8 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 export class TableComponent implements OnInit {
   tasks: Tasks = new Tasks(); // данные вводимого пользователя
 
-  visibility: boolean;
+  visibility: boolean = true;
+  spinnerView: boolean;
   editVisibility: boolean;
   date: object;
   exclamation: boolean;
@@ -44,6 +45,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit() {
     this.getElementData();
+    this.spinnerView = true;
   }
 
   getElementData(): any {
@@ -60,7 +62,7 @@ export class TableComponent implements OnInit {
           date: stringDate,
           action: undefined
         };
-        ELEMENT_DATA.push(this.tasks);
+        ELEMENT_DATA.unshift(this.tasks);
       });
 
       this.tasks = {
@@ -87,32 +89,50 @@ export class TableComponent implements OnInit {
         action: undefined
       };
 
-      this.dataSource.push(taskObject);
+      this.dataSource.unshift(taskObject);
       this.dataSource = [...this.dataSource];
     });
   }
 
-  onClose() {
-    document.querySelector('mat-sidenav-container').classList.remove('visibility');
+  onOpen() {
     this.visibility = false;
   }
 
+  onClose() {
+    //document.querySelector('mat-sidenav-container').classList.remove('visibility');
+    this.visibility = true;
+  }
+
   submit(tasks: Tasks) {
+    this.spinnerView = false;
+    this.visibility = false;
 
-    this.httpService.postData(tasks)
-      .subscribe(
-        (data: Tasks) => {
-          this.addElementById(data.id);
-        },
-        error => console.log(error)
-      );
+    if (!this.checkExclaim('!')) {
+      this.httpService.postData(tasks)
+        .subscribe(
+          (data: Tasks) => {
+            this.addElementById(data.id);
+            this.spinnerView = true;
+            this.visibility = true;
+          },
+          error => console.log(error)
+        );
+    }
+  }
 
-    if (~this.tasks.description.indexOf('!')) {
+  checkExclaim(exclaim) {
+    if (~this.tasks.description.indexOf(exclaim)) {
       this.exclamation = true;
+      this.visibility = true;
+      setTimeout(() => {
+        this.visibility = false;
+        this.spinnerView = true;
+        }, 1000);
       document.querySelector('snack-bar-container').setAttribute("style", "display:block");
+      return true;
     } else {
-      this.exclamation = false;
-      document.querySelector('snack-bar-container').setAttribute("style", "display:none");
+      this.onClose();
+      return false;
     }
   }
 
