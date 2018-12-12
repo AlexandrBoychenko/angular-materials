@@ -6,6 +6,8 @@
   right: 0;
   background: #eee;
   width: 39%;
+  height: 100vh;
+  overflow: visible;
   display: none;
   border-bottom: 1px solid #dcdcdc;
 }
@@ -68,4 +70,8 @@ mat-icon:hover {
   margin-left: 5%;
   display: none;
   position: absolute;
+}
+
+.mat-toolbar {
+  margin-bottom: 5%;
 }

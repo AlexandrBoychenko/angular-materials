@@ -10,19 +10,22 @@ import { ReactiveFormsModule, FormsModule }   from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
+import { MatToolbarModule } from '@angular/material';
 
 
 import { AppComponent } from './app.component';
 import { TableComponent } from './table/table.component';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
     SnackBarComponent,
-    DialogComponent
+    DialogComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { DialogComponent } from './dialog/dialog.component';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
