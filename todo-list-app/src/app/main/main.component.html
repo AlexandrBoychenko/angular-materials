@@ -13,7 +13,7 @@
       <div class="close-text">Закрыть</div>
       <mat-icon class="mat-close" (click)="onClose()">close</mat-icon></div>
     <mat-toolbar>Новая задача</mat-toolbar>
-    <textarea class="form-control" [(ngModel)]="tasks.description" #description = "ngModel" name="task-input" cols="60%" rows="10" ></textarea>
+    <textarea class="form-control" [(ngModel)]="tasks.description" name="task-input" cols="60%" rows="10" ></textarea>
     <button class="side-btn" mat-button [disabled]="!tasks.description" (click)="addTask(tasks)">Добавить</button>
   </mat-sidenav>
   <mat-sidenav-content></mat-sidenav-content>

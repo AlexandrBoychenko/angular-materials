@@ -34,7 +34,6 @@ export class MainComponent implements OnInit {
   hideSideBar: boolean = true;
   hideSpinner: boolean = true;
   dialogRef: any;
-  currentId: number;
 
   constructor(
     private httpService: HttpService,
@@ -156,8 +155,8 @@ export class MainComponent implements OnInit {
 
   getDate(data): string {
     let currentDate = new Date(data['date']);
-    return currentDate.toDateString() + ' time: ' + currentDate.getUTCHours() + ':'
-      + currentDate.getUTCMinutes() + ':' + currentDate.getUTCSeconds();
+    return currentDate.toDateString() + ' time: ' + currentDate.getHours() + ':'
+      + currentDate.getMinutes() + ':' + currentDate.getSeconds();
   }
 
   openDialog(): void {
