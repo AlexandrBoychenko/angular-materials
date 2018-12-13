@@ -33,7 +33,7 @@
     <th mat-header-row *matHeaderCellDef> Текст задачи </th>
     <td mat-cell class="task-description" *matCellDef="let element">
       {{element.description}}
-      <mat-icon class="create-icon" id="{{element.id}}" (click)="openDialog($event)">create</mat-icon>
+      <mat-icon class="create-icon" id="{{element.id}}" (click)="openDialog()">create</mat-icon>
     </td>
   </ng-container>
 
@@ -45,7 +45,9 @@
 
   <ng-container matColumnDef="actions">
     <th mat-header-row *matHeaderCellDef class="cell-center"> Действия с задачей </th>
-    <td mat-cell *matCellDef="let element" class="cell-center"> <mat-icon id="{{element.id}}" (click)="deleteElement($event)">delete</mat-icon> </td>
+    <td mat-cell *matCellDef="let element" class="cell-center">
+      <mat-icon id="{{element.id}}" (click)="openConfirmDialog()">delete</mat-icon>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

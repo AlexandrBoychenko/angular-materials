@@ -13,7 +13,7 @@ export class DialogComponent implements OnInit {
   description: string;
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) data) {
 
@@ -21,7 +21,7 @@ export class DialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       description: [this.description, []]
     });
   }

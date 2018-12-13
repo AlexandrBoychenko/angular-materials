@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogComponent } from '../dialog/dialog.component';
+import { ConfirmComponent } from '../confirm/confirm.component';
 import { MatSnackBar } from '@angular/material';
 
 
@@ -105,31 +106,35 @@ export class MainComponent implements OnInit {
     this.changeSideBarAndSpinner(false, false);
 
     if (!this.checkExclaim('!')) {
-      this.httpService.postData(tasks)
-        .subscribe(
-          (data: Tasks) => {
-            this.addElementById(data.id);
-            this.changeSideBarAndSpinner(true, true);
-          },
-          error => this.snackBar.open(error, 'Закрыть')
-        );
+      this.handleAddTask(tasks);
+    } else {
+      this.handleExclaimError();
     }
   }
 
-  checkExclaim(exclaim): boolean {
-    if (~this.tasks.description.indexOf(exclaim)) {
-      this.snackBar.open('Ошибка! Текст содержит символ "!"', 'Закрыть');
-      this.hideSideBar = true;
+  handleAddTask(tasks): void {
+    this.onClose();
+    this.httpService.postData(tasks)
+      .subscribe(
+        (data: Tasks) => {
+          this.addElementById(data.id);
+          this.changeSideBarAndSpinner(true, true);
+        },
+        error => this.snackBar.open(error, 'Закрыть')
+      );
+  }
 
-      setTimeout(() => {
-        this.changeSideBarAndSpinner(false, true);
-      }, 1000);
+  handleExclaimError() {
+    this.snackBar.open('Ошибка! Текст содержит символ "!"', 'Закрыть');
+    this.hideSideBar = true;
 
-      return true;
-    } else {
-      this.onClose();
-      return false;
-    }
+    setTimeout(() => {
+      this.changeSideBarAndSpinner(false, true);
+    }, 1000);
+  }
+
+  checkExclaim(exclaim): number {
+    return ~this.tasks.description.indexOf(exclaim);
   }
 
   changeSideBarAndSpinner(sidebar: boolean, spinner: boolean): void {
@@ -137,14 +142,16 @@ export class MainComponent implements OnInit {
     this.hideSpinner = spinner;
   }
 
-  deleteElement(event): void {
-    this.currentId = this.getTaskFromHTML(event).id;
-
-    this.httpService.deleteData(this.currentId)
+  deleteTask(currentId): void {
+    this.hideSpinner = false;
+    this.httpService.deleteData(currentId)
       .subscribe(
-        answer => this.removeById(this.currentId),
+        () => {
+          this.removeById(currentId);
+          this.hideSpinner = true;
+        },
         error => this.snackBar.open(error, 'Закрыть')
-      );
+      )
   }
 
   getDate(data): string {
@@ -153,12 +160,17 @@ export class MainComponent implements OnInit {
       + currentDate.getUTCMinutes() + ':' + currentDate.getUTCSeconds();
   }
 
-  openDialog(event): void {
-    const currentDialogConfig = this.createDialog();
+  openDialog(): void {
+    const currentDialogConfig = this.createDialog(DialogComponent);
     this.modifyAfterClosed(currentDialogConfig.data.id);
   }
 
-  createDialog(): any {
+  openConfirmDialog(): void {
+    const currentDialogConfig = this.createDialog(ConfirmComponent);
+    this.deleteAfterClosed(currentDialogConfig.data.id);
+  }
+
+  createDialog(DialogComponent): any {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
@@ -175,6 +187,17 @@ export class MainComponent implements OnInit {
         this.dialogRef.close();
         if (data) {
           this.updateTask(data, objectId);
+        }
+      }
+    );
+  }
+
+  deleteAfterClosed(objectId): void {
+    this.dialogRef.afterClosed().subscribe(
+      (data) => {
+        this.dialogRef.close();
+        if(data === "delete") {
+          this.deleteTask(objectId);
         }
       }
     );

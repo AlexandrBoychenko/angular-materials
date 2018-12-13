@@ -17,12 +17,14 @@ import { MatProgressSpinnerModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    DialogComponent
+    DialogComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,6 @@ import { DialogComponent } from './dialog/dialog.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent]
+  entryComponents: [DialogComponent, ConfirmComponent]
 })
 export class AppModule { }
