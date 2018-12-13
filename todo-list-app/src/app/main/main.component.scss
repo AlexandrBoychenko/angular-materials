@@ -6,6 +6,15 @@
   margin: 2rem;
 }
 
+.start-div {
+  text-align: center;
+  border: 2px solid blue;
+  padding-top: 2%;
+  border-radius: 15px;
+  width: 50%;
+  margin: auto;
+}
+
 .example-container {
   position: absolute;
   top: 0;
@@ -87,4 +96,12 @@ mat-icon:hover {
 
 .task-description:hover > .create-icon {
   visibility: visible;
+}
+
+.main-view {
+  display: none;
+}
+
+.start-view {
+  display: none;
 }

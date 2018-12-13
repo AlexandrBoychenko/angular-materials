@@ -33,6 +33,8 @@ export class MainComponent implements OnInit {
 
   hideSideBar: boolean = true;
   hideSpinner: boolean = true;
+  hideStart: boolean = false;
+  hideMain: boolean = true;
   dialogRef: any;
 
   constructor(
@@ -48,21 +50,29 @@ export class MainComponent implements OnInit {
   }
 
   getElementData(): any {
+    this.hideSpinner = false;
     this.httpService.getData().subscribe((data: []) => {
-      data.forEach((item: Tasks) => {
+      if (data.length) {
+        this.hideStart = true;
+        data.forEach((item: Tasks) => {
 
-        let stringDate = this.getDate(item);
+          let stringDate = this.getDate(item);
 
-        let {id, description} = item;
+          let {id, description} = item;
 
-        this.tasks = {
-          id: id,
-          description: description,
-          date: stringDate,
-          action: undefined
-        };
-        ELEMENT_DATA.unshift(this.tasks);
-      });
+          this.tasks = {
+            id: id,
+            description: description,
+            date: stringDate,
+            action: undefined
+          };
+          ELEMENT_DATA.unshift(this.tasks);
+        });
+      } else {
+        this.hideMain = true;
+      }
+
+      this.hideSpinner = true;
 
       this.tasks = {
         id: undefined,
@@ -160,21 +170,22 @@ export class MainComponent implements OnInit {
   }
 
   openDialog(): void {
-    const currentDialogConfig = this.createDialog(DialogComponent);
+    const currentDialogConfig = this.createDialog(DialogComponent, 'dialog-window');
     this.modifyAfterClosed(currentDialogConfig.data.id);
   }
 
   openConfirmDialog(): void {
-    const currentDialogConfig = this.createDialog(ConfirmComponent);
+    const currentDialogConfig = this.createDialog(ConfirmComponent, 'confirm-window');
     this.deleteAfterClosed(currentDialogConfig.data.id);
   }
 
-  createDialog(DialogComponent): any {
+  createDialog(DialogComponent, className): any {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.data = this.getTaskFromHTML(event);
+    dialogConfig.panelClass = className;
 
     this.dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     return dialogConfig;
@@ -237,7 +248,7 @@ export class MainComponent implements OnInit {
   getTaskFromHTML(event) {
     return {
       id: event.target.attributes.id.value,
-      description: event.currentTarget.parentNode.childNodes[0].nodeValue
+      description: event.currentTarget.parentNode.firstChild.data
     }
   }
 }

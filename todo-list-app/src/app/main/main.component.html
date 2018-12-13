@@ -1,10 +1,17 @@
-<!--header button-->
-<div class="nav-pan">
-  <button mat-button (click)="onOpen()">Добавить задачу</button>
+<!--message and button if database is empty-->
+<div class="start-div" [ngClass]="{'start-view': hideStart}">
+  <div class="start-message">В списке пока еще нет задач</div>
+  <button mat-button (click)="onOpen()">Cоздать первую задачу</button>
 </div>
 
 <!--spinner-->
 <mat-spinner [ngClass]="{'spinner-view': hideSpinner}"></mat-spinner>
+
+<div class="main-wrapper" [ngClass]="{'main-view': hideMain}">
+<!--header button-->
+<div class="nav-pan">
+  <button mat-button (click)="onOpen()">Добавить задачу</button>
+</div>
 
 <!--side-nav-bar-->
 <mat-sidenav-container [ngClass]="{'side-bar-view': hideSideBar}" class="example-container">
@@ -13,7 +20,8 @@
       <div class="close-text">Закрыть</div>
       <mat-icon class="mat-close" (click)="onClose()">close</mat-icon></div>
     <mat-toolbar>Новая задача</mat-toolbar>
-    <textarea class="form-control" [(ngModel)]="tasks.description" name="task-input" cols="60%" rows="10" ></textarea>
+    <textarea class="form-control" [(ngModel)]="tasks.description" name="task-input" cols="60%" rows="10" matInput placeholder="Текст задачи">
+    </textarea>
     <button class="side-btn" mat-button [disabled]="!tasks.description" (click)="addTask(tasks)">Добавить</button>
   </mat-sidenav>
   <mat-sidenav-content></mat-sidenav-content>
@@ -53,3 +61,4 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+</div>

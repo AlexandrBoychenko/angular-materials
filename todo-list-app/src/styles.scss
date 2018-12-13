@@ -9,3 +9,20 @@
 div, p, a {
   font-family: Roboto,"Helvetica Neue",sans-serif;
 }
+
+.dialog-window {
+  min-width: 35vw;
+  min-height: 35vh;
+}
+
+.mat-input-element {
+  height: 100%;
+  width: 100%;
+  resize: inherit;
+  overflow: auto;
+}
+
+.mat-form-field-infix {
+  width: 35rem !important;
+  height: 5rem;
+}
