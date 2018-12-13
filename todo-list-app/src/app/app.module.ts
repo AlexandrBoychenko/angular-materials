@@ -15,15 +15,13 @@ import { MatProgressSpinnerModule } from '@angular/material';
 
 
 import { AppComponent } from './app.component';
-import { TableComponent } from './table/table.component';
-import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { MainComponent } from './main/main.component';
 import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TableComponent,
-    SnackBarComponent,
+    MainComponent,
     DialogComponent
   ],
   imports: [

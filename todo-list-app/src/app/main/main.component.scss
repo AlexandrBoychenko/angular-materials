@@ -76,7 +76,9 @@ mat-icon:hover {
 }
 
 .mat-spinner {
-  margin-left: 46%;
+  position: absolute;
+  top: 46%;
+  left: 46%;
 }
 
 .spinnerView {
