@@ -46,12 +46,7 @@ mat-sidenav[mode="side"] {
   display: block;
 }
 
-.editVisibility {
-  display: inline-block;
-}
-
 textarea { resize: vertical; }
-
 
 table {
   width: 100%;
@@ -67,7 +62,8 @@ mat-icon:hover {
 
 .create-icon {
   margin-left: 5%;
-  display: none;
+  display: inline-block;
+  visibility: hidden;
   position: absolute;
 }
 
@@ -81,10 +77,14 @@ mat-icon:hover {
   left: 46%;
 }
 
-.spinnerView {
+.spinner-view {
   display: none;
 }
 
-.visibility {
+.side-bar-view {
   display: none;
+}
+
+.task-description:hover > .create-icon {
+  visibility: visible;
 }

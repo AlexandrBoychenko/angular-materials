@@ -27,26 +27,24 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 })
 
 export class MainComponent implements OnInit {
-  tasks: Tasks = new Tasks(); // данные вводимого пользователя
+  tasks: Tasks = new Tasks();
+  dataSource: Tasks[];
 
-  visibility: boolean = true;
-  spinnerView: boolean;
-  editVisibility: boolean;
+  hideSideBar: boolean = true;
+  hideSpinner: boolean = true;
   dialogRef: any;
   currentId: number;
-
-  dataSource: Tasks[];
 
   constructor(
     private httpService: HttpService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar) {}
+    private snackBar: MatSnackBar
+  ) {}
 
   displayedColumns: string[] = ['id', 'description', 'date', 'actions'];
 
   ngOnInit() {
     this.getElementData();
-    this.spinnerView = true;
   }
 
   getElementData(): any {
@@ -96,26 +94,24 @@ export class MainComponent implements OnInit {
   }
 
   onOpen(): void {
-    this.visibility = false;
+    this.hideSideBar = false;
   }
 
   onClose(): void {
-    this.visibility = true;
+    this.hideSideBar = true;
   }
 
-  submit(tasks: Tasks): void {
-    this.spinnerView = false;
-    this.visibility = false;
+  addTask(tasks: Tasks): void {
+    this.changeSideBarAndSpinner(false, false);
 
     if (!this.checkExclaim('!')) {
       this.httpService.postData(tasks)
         .subscribe(
           (data: Tasks) => {
             this.addElementById(data.id);
-            this.spinnerView = true;
-            this.visibility = true;
+            this.changeSideBarAndSpinner(true, true);
           },
-          error => console.log(error)
+          error => this.snackBar.open(error, 'Закрыть')
         );
     }
   }
@@ -123,17 +119,22 @@ export class MainComponent implements OnInit {
   checkExclaim(exclaim): boolean {
     if (~this.tasks.description.indexOf(exclaim)) {
       this.snackBar.open('Ошибка! Текст содержит символ "!"', 'Закрыть');
-      this.visibility = true;
+      this.hideSideBar = true;
+
       setTimeout(() => {
-        this.visibility = false;
-        this.spinnerView = true;
+        this.changeSideBarAndSpinner(false, true);
       }, 1000);
-      document.querySelector('snack-bar-container').setAttribute("style", "display:block");
+
       return true;
     } else {
       this.onClose();
       return false;
     }
+  }
+
+  changeSideBarAndSpinner(sidebar: boolean, spinner: boolean): void {
+    this.hideSideBar = sidebar;
+    this.hideSpinner = spinner;
   }
 
   deleteElement(event): void {
@@ -142,7 +143,7 @@ export class MainComponent implements OnInit {
     this.httpService.deleteData(this.currentId)
       .subscribe(
         answer => this.removeById(this.currentId),
-        error => console.log(error)
+        error => this.snackBar.open(error, 'Закрыть')
       );
   }
 
@@ -152,17 +153,12 @@ export class MainComponent implements OnInit {
       + currentDate.getUTCMinutes() + ':' + currentDate.getUTCSeconds();
   }
 
-  onMouseEnter(event): void {
-    event.target.querySelector('.create-icon').setAttribute('style', 'display:inline-block');
-    this.editVisibility = true;
-  }
-
-  onMouseLeave(event): void {
-    event.target.querySelector('.create-icon').setAttribute('style', 'display:none');
-    this.editVisibility = false;
-  }
-
   openDialog(event): void {
+    const currentDialogConfig = this.createDialog();
+    this.modifyAfterClosed(currentDialogConfig.data.id);
+  }
+
+  createDialog(): any {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
@@ -170,16 +166,13 @@ export class MainComponent implements OnInit {
     dialogConfig.data = this.getTaskFromHTML(event);
 
     this.dialogRef = this.dialog.open(DialogComponent, dialogConfig);
-
-    this.modifyAfterClosed(dialogConfig.data.id);
+    return dialogConfig;
   }
 
   modifyAfterClosed(objectId): void {
     this.dialogRef.afterClosed().subscribe(
       data => {
-        console.log("Dialog output:", data);
         this.dialogRef.close();
-
         if (data) {
           this.updateTask(data, objectId);
         }
@@ -188,15 +181,15 @@ export class MainComponent implements OnInit {
   }
 
   updateTask(formData, objectId): void {
-    this.spinnerView = false;
+    this.hideSpinner = false;
 
     this.httpService.putData(formData, objectId)
       .subscribe(
         (data: Tasks) => {
           this.replaceById(data);
-          this.spinnerView = true;
+          this.hideSpinner = true;
         },
-        error => console.log(error)
+        error => this.snackBar.open(error, 'Закрыть')
       );
   }
 

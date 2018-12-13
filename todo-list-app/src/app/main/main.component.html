@@ -1,26 +1,26 @@
+<!--header button-->
 <div class="nav-pan">
   <button mat-button (click)="onOpen()">Добавить задачу</button>
 </div>
-<mat-spinner [ngClass]="{spinnerView: spinnerView}"></mat-spinner>
-<mat-sidenav-container [ngClass]="{visibility: visibility}" class="example-container">
+
+<!--spinner-->
+<mat-spinner [ngClass]="{'spinner-view': hideSpinner}"></mat-spinner>
+
+<!--side-nav-bar-->
+<mat-sidenav-container [ngClass]="{'side-bar-view': hideSideBar}" class="example-container">
   <mat-sidenav  mode="side" opened>
     <div class="nav-close">
       <div class="close-text">Закрыть</div>
       <mat-icon class="mat-close" (click)="onClose()">close</mat-icon></div>
     <mat-toolbar>Новая задача</mat-toolbar>
-    <div class="add-task">Добавление задачи:</div>
     <textarea class="form-control" [(ngModel)]="tasks.description" #description = "ngModel" name="task-input" cols="60%" rows="10" ></textarea>
-
-
-    <button class="side-btn" mat-button [disabled]="!tasks.description" (click)="submit(tasks)">Добавить</button>
+    <button class="side-btn" mat-button [disabled]="!tasks.description" (click)="addTask(tasks)">Добавить</button>
   </mat-sidenav>
   <mat-sidenav-content></mat-sidenav-content>
 </mat-sidenav-container>
 
+<!--table with tasks-->
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
 
   <!-- Position Column -->
   <ng-container matColumnDef="id" class="cell-center">
@@ -31,9 +31,9 @@
   <!-- Name Column -->
   <ng-container matColumnDef="description">
     <th mat-header-row *matHeaderCellDef> Текст задачи </th>
-    <td mat-cell (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)" *matCellDef="let element">
+    <td mat-cell class="task-description" *matCellDef="let element">
       {{element.description}}
-      <mat-icon [ngClass]="{editVisibility: editVisibility}" class="create-icon" id="{{element.id}}" (click)="openDialog($event)">create</mat-icon>
+      <mat-icon class="create-icon" id="{{element.id}}" (click)="openDialog($event)">create</mat-icon>
     </td>
   </ng-container>
 
@@ -48,10 +48,6 @@
     <td mat-cell *matCellDef="let element" class="cell-center"> <mat-icon id="{{element.id}}" (click)="deleteElement($event)">delete</mat-icon> </td>
   </ng-container>
 
-
-
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-
-
