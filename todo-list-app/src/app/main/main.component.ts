@@ -58,8 +58,8 @@ export class MainComponent implements OnInit {
 
     this.httpService.getData().subscribe((data: []) => {
       if (data.length) {
-        this.hideStart = true;
-        this.hideMain = false;
+        this.changeStartView(true, false);
+
         data.forEach((item: Tasks) => {
 
           let stringDate = this.getDate(item);
@@ -75,8 +75,7 @@ export class MainComponent implements OnInit {
           ELEMENT_DATA.unshift(this.tasks);
         });
       } else {
-        this.hideMain = true;
-        this.hideStart = false;
+        this.changeStartView(false, true);
       }
 
       this.hideSpinner = true;
@@ -110,11 +109,11 @@ export class MainComponent implements OnInit {
     });
   }
 
-  onOpen(): void {
+  sideBarOpen(): void {
     this.hideSideBar = false;
   }
 
-  onClose(): void {
+  sideBarClose(): void {
     this.hideSideBar = true;
   }
 
@@ -127,12 +126,11 @@ export class MainComponent implements OnInit {
     } else {
       this.handleExclaimError();
     }
-    this.hideStart = true;
-    this.hideMain = false;
+    this.changeStartView(true, false);
   }
 
   handleAddTask(tasks): void {
-    this.onClose();
+    this.sideBarOpen();
     this.httpService.postData(tasks)
       .subscribe(
         (data: Tasks) => {
@@ -154,6 +152,11 @@ export class MainComponent implements OnInit {
 
   checkExclaim(exclaim): number {
     return ~this.tasks.description.indexOf(exclaim);
+  }
+
+  changeStartView(start: boolean, main: boolean): void {
+    this.hideStart = start;
+    this.hideMain = main;
   }
 
   changeSideBarAndSpinner(sidebar: boolean, spinner: boolean): void {

@@ -1,7 +1,7 @@
 <!--message and button if database is empty-->
 <div class="start-div" [ngClass]="{'start-view': hideStart}">
-  <div class="start-message">В списке пока еще нет задач</div>
-  <button mat-button (click)="onOpen()">Cоздать первую задачу</button>
+  <div>В списке пока еще нет задач</div>
+  <button mat-button (click)="sideBarOpen()">Cоздать первую задачу</button>
 </div>
 
 <!--spinner-->
@@ -16,7 +16,7 @@
   <mat-sidenav  mode="side" opened>
     <div class="nav-close">
       <div class="close-text">Закрыть</div>
-      <mat-icon class="mat-close" (click)="onClose()">close</mat-icon></div>
+      <mat-icon class="mat-close" (click)="sideBarClose()">close</mat-icon></div>
     <mat-toolbar>Новая задача</mat-toolbar>
     <textarea class="form-control" [(ngModel)]="tasks.description" name="task-input" cols="60%" rows="10" matInput placeholder="Текст задачи">
     </textarea>
@@ -25,44 +25,46 @@
   <mat-sidenav-content></mat-sidenav-content>
 </mat-sidenav-container>
 
+<!--main section of the page-->
 <div class="main-wrapper" [ngClass]="{'main-view': hideMain}">
-<!--header button-->
-<div class="nav-pan">
-  <button mat-button (click)="onOpen()">Добавить задачу</button>
-</div>
 
-<!--table with tasks-->
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!--header button-->
+  <div class="nav-pan">
+    <button mat-button (click)="sideBarOpen()">Добавить задачу</button>
+  </div>
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="id" class="cell-center">
-    <th mat-header-row *matHeaderCellDef> Id задачи </th>
-    <td mat-row *matCellDef="let element" class="cell-center"> {{element.id}} </td>
-  </ng-container>
+  <!--table with tasks-->
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="description" class="task-description">
-    <th mat-header-row *matHeaderCellDef> Текст задачи </th>
-    <td mat-cell class="task-description" *matCellDef="let element">
-      {{element.description}}
-      <mat-icon class="create-icon" id="{{element.id}}" (click)="openDialog()">create</mat-icon>
-    </td>
-  </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="id" class="cell-center">
+      <th mat-header-row *matHeaderCellDef> Id задачи </th>
+      <td mat-row *matCellDef="let element" class="cell-center"> {{element.id}} </td>
+    </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="date">
-    <th mat-header-row *matHeaderCellDef> Дата создания </th>
-    <td mat-cell *matCellDef="let element" class="cell-center"> {{element.date}} </td>
-  </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="description" class="task-description">
+      <th mat-header-row *matHeaderCellDef> Текст задачи </th>
+      <td mat-cell class="task-description" *matCellDef="let element">
+        {{element.description}}
+        <mat-icon class="create-icon" id="{{element.id}}" (click)="openDialog()">create</mat-icon>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-row *matHeaderCellDef class="cell-center"> Действия с задачей </th>
-    <td mat-cell *matCellDef="let element" class="cell-center task-action">
-      <mat-icon id="{{element.id}}" (click)="openConfirmDialog()">delete</mat-icon>
-    </td>
-  </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-row *matHeaderCellDef> Дата создания </th>
+      <td mat-cell *matCellDef="let element" class="cell-center"> {{element.date}} </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <ng-container matColumnDef="actions">
+      <th mat-header-row *matHeaderCellDef class="cell-center"> Действия с задачей </th>
+      <td mat-cell *matCellDef="let element" class="cell-center task-action">
+        <mat-icon id="{{element.id}}" (click)="openConfirmDialog()">delete</mat-icon>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
