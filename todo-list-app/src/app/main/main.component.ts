@@ -35,6 +35,8 @@ export class MainComponent implements OnInit {
   hideSpinner: boolean = true;
   hideStart: boolean = true;
   hideMain: boolean = true;
+  hideStartNote: boolean;
+  hideLoadNote: boolean;
   dialogRef: any;
 
   constructor(
@@ -50,7 +52,10 @@ export class MainComponent implements OnInit {
   }
 
   getElementData(): any {
+
     this.hideSpinner = false;
+    this.changeSpinnerNote(false, true);
+
     this.httpService.getData().subscribe((data: []) => {
       if (data.length) {
         this.hideStart = true;
@@ -115,6 +120,7 @@ export class MainComponent implements OnInit {
 
   addTask(tasks: Tasks): void {
     this.changeSideBarAndSpinner(false, false);
+    this.changeSpinnerNote(true, false);
 
     if (!this.checkExclaim('!')) {
       this.handleAddTask(tasks);
@@ -155,8 +161,15 @@ export class MainComponent implements OnInit {
     this.hideSpinner = spinner;
   }
 
+  changeSpinnerNote(startNote: boolean, loadNote: boolean): void {
+    this.hideStartNote = startNote;
+    this.hideLoadNote = loadNote;
+  }
+
   deleteTask(currentId): void {
     this.hideSpinner = false;
+    this.changeSpinnerNote(false, true);
+
     this.httpService.deleteData(currentId)
       .subscribe(
         () => {
@@ -218,6 +231,7 @@ export class MainComponent implements OnInit {
 
   updateTask(formData, objectId): void {
     this.hideSpinner = false;
+    this.changeSpinnerNote(false, true);
 
     this.httpService.putData(formData, objectId)
       .subscribe(

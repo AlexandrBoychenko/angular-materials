@@ -7,7 +7,8 @@
 <!--spinner-->
 <div class="spinner-wrapper" [ngClass]="{'spinner-view': hideSpinner}">
   <mat-spinner></mat-spinner>
-  <div>Задачи загружаются…</div>
+  <div [ngClass]="{'start-spinner-note': hideStartNote}">Задачи загружаются…</div>
+  <div [ngClass]="{'load-spinner-note': hideLoadNote}">Подождите, идёт добавление</div>
 </div>
 
 <!--side-nav-bar-->

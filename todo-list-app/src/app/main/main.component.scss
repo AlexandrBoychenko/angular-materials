@@ -39,7 +39,7 @@ mat-sidenav[mode="side"] {
 }
 
 .form-control {
-  height: 55%;
+  height: 35%;
 }
 
 .nav-close {
@@ -105,22 +105,15 @@ mat-icon:hover {
   margin-top: 20%;
 }
 
-.spinner-view {
-  display: none;
-}
-
-.side-bar-view {
-  display: none;
-}
-
 .task-description:hover > .create-icon {
   visibility: visible;
 }
 
-.main-view {
-  display: none;
-}
-
-.start-view {
+.start-view,
+.main-view,
+.side-bar-view,
+.spinner-view,
+.start-spinner-note,
+.load-spinner-note {
   display: none;
 }
