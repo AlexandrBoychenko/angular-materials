@@ -54,6 +54,7 @@ export class MainComponent implements OnInit {
     this.httpService.getData().subscribe((data: []) => {
       if (data.length) {
         this.hideStart = true;
+        this.hideMain = false;
         data.forEach((item: Tasks) => {
 
           let stringDate = this.getDate(item);
@@ -119,6 +120,8 @@ export class MainComponent implements OnInit {
     } else {
       this.handleExclaimError();
     }
+    this.hideStart = true;
+    this.hideMain = false;
   }
 
   handleAddTask(tasks): void {
@@ -165,8 +168,7 @@ export class MainComponent implements OnInit {
 
   getDate(data): string {
     let currentDate = new Date(data['date']);
-    return currentDate.toDateString() + ' time: ' + currentDate.getHours() + ':'
-      + currentDate.getMinutes() + ':' + currentDate.getSeconds();
+    return currentDate.toString().slice(0,24);
   }
 
   openDialog(): void {

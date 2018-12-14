@@ -38,6 +38,10 @@ mat-sidenav[mode="side"] {
   width: 100%;
 }
 
+.form-control {
+  height: 55%;
+}
+
 .nav-close {
   text-align: right;
 }
@@ -80,10 +84,17 @@ mat-icon:hover {
   margin-bottom: 5%;
 }
 
-.mat-spinner {
+.spinner-wrapper {
   position: absolute;
-  top: 46%;
-  left: 46%;
+  top: 45%;
+  left: 43.5%;
+  text-align: center;
+  text-align: -webkit-center;
+  text-align: -moz-center;
+}
+
+.spinner-wrapper div {
+  margin-top: 20%;
 }
 
 .spinner-view {

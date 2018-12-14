@@ -5,12 +5,9 @@
 </div>
 
 <!--spinner-->
-<mat-spinner [ngClass]="{'spinner-view': hideSpinner}"></mat-spinner>
-
-<div class="main-wrapper" [ngClass]="{'main-view': hideMain}">
-<!--header button-->
-<div class="nav-pan">
-  <button mat-button (click)="onOpen()">Добавить задачу</button>
+<div class="spinner-wrapper" [ngClass]="{'spinner-view': hideSpinner}">
+  <mat-spinner></mat-spinner>
+  <div>Задачи загружаются…</div>
 </div>
 
 <!--side-nav-bar-->
@@ -26,6 +23,12 @@
   </mat-sidenav>
   <mat-sidenav-content></mat-sidenav-content>
 </mat-sidenav-container>
+
+<div class="main-wrapper" [ngClass]="{'main-view': hideMain}">
+<!--header button-->
+<div class="nav-pan">
+  <button mat-button (click)="onOpen()">Добавить задачу</button>
+</div>
 
 <!--table with tasks-->
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

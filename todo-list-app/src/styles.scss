@@ -22,6 +22,10 @@ div, p, a {
   overflow: auto;
 }
 
+.mat-drawer-inner-container {
+  overflow: unset !important;
+}
+
 .mat-form-field-infix {
   width: 35rem !important;
   height: 5rem;
