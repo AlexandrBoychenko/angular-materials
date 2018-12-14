@@ -33,7 +33,7 @@ export class MainComponent implements OnInit {
 
   hideSideBar: boolean = true;
   hideSpinner: boolean = true;
-  hideStart: boolean = false;
+  hideStart: boolean = true;
   hideMain: boolean = true;
   dialogRef: any;
 
@@ -71,6 +71,7 @@ export class MainComponent implements OnInit {
         });
       } else {
         this.hideMain = true;
+        this.hideStart = false;
       }
 
       this.hideSpinner = true;
