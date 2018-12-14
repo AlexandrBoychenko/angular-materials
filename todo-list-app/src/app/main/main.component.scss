@@ -57,7 +57,9 @@ mat-sidenav[mode="side"] {
   display: block;
 }
 
-textarea { resize: vertical; }
+textarea {
+  resize: vertical;
+}
 
 table {
   width: 100%;

@@ -17,9 +17,6 @@ export interface PeriodicElement {
 
 const ELEMENT_DATA: PeriodicElement[] = [];
 
-/**
- * @title Basic use of `<main mat-main>`
- */
 @Component({
   selector: 'main',
   styleUrls: ['./main.component.scss'],
