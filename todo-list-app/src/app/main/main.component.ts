@@ -4,6 +4,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogComponent } from '../dialog/dialog.component';
 import { ConfirmComponent } from '../confirm/confirm.component';
 import { MatSnackBar } from '@angular/material';
+import { trigger, style, state } from '@angular/animations';
 
 
 import {Tasks} from '../tasks';
@@ -21,17 +22,30 @@ const ELEMENT_DATA: PeriodicElement[] = [];
   selector: 'main',
   styleUrls: ['./main.component.scss'],
   templateUrl: './main.component.html',
-  providers: [HttpService]
+  providers: [HttpService],
+  animations: [
+    trigger("animationTrigger", [
+      state('invisible', style({
+        left: '-39%',
+        transition: '1s'
+      })),
+      state('moveOut', style({
+        left: '0',
+        transition: '1s'
+      }))
+    ])
+  ]
 })
 
 export class MainComponent implements OnInit {
   tasks: Tasks = new Tasks();
   dataSource: Tasks[];
 
-  hideSideBar: boolean = true;
   hideSpinner: boolean = true;
   hideStart: boolean = true;
   hideMain: boolean = true;
+  sideBarStatus: boolean = false;
+
   hideStartNote: boolean;
   hideLoadNote: boolean;
   dialogRef: any;
@@ -107,11 +121,12 @@ export class MainComponent implements OnInit {
   }
 
   sideBarOpen(): void {
-    this.hideSideBar = false;
+    this.sideBarStatus = true;
   }
 
   sideBarClose(): void {
-    this.hideSideBar = true;
+    this.sideBarStatus = false;
+    this.tasks.description = '';
   }
 
   addTask(tasks: Tasks): void {
@@ -124,6 +139,7 @@ export class MainComponent implements OnInit {
       this.handleExclaimError();
     }
     this.changeStartView(true, false);
+    this.tasks.description = '';
   }
 
   handleAddTask(tasks): void {
@@ -132,7 +148,7 @@ export class MainComponent implements OnInit {
       .subscribe(
         (data: Tasks) => {
           this.addElementById(data.id);
-          this.changeSideBarAndSpinner(true, true);
+          this.changeSideBarAndSpinner(false, true);
         },
         error => this.snackBar.open(error, 'Закрыть')
       );
@@ -140,10 +156,10 @@ export class MainComponent implements OnInit {
 
   handleExclaimError() {
     this.snackBar.open('Ошибка! Текст содержит символ "!"', 'Закрыть');
-    this.hideSideBar = true;
+    this.sideBarStatus = false;
 
     setTimeout(() => {
-      this.changeSideBarAndSpinner(false, true);
+      this.changeSideBarAndSpinner(true, true);
     }, 1000);
   }
 
@@ -157,7 +173,7 @@ export class MainComponent implements OnInit {
   }
 
   changeSideBarAndSpinner(sidebar: boolean, spinner: boolean): void {
-    this.hideSideBar = sidebar;
+    this.sideBarStatus = sidebar;
     this.hideSpinner = spinner;
   }
 

@@ -1,6 +1,6 @@
 CREATE TABLE `tasks` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
-    `description` BLOB NOT NULL default '',
+    `description` TEXT NOT NULL default '',
     `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 );

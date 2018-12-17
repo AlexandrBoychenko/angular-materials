@@ -12,7 +12,8 @@
 </div>
 
 <!--side-nav-bar-->
-<mat-sidenav-container [ngClass]="{'side-bar-view': hideSideBar}" class="example-container">
+<mat-sidenav-container [ngClass]="{'side-bar-view': hideSideBar}" class="example-container"
+                       [@animationTrigger]="sideBarStatus ? 'moveOut' : 'invisible'">
   <mat-sidenav  mode="side" opened>
     <div class="nav-close">
       <div class="close-text">Закрыть</div>
