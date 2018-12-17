@@ -74,7 +74,7 @@ mat-icon:hover {
 }
 
 .create-icon {
-  margin-left: 5%;
+  margin-left: 1%;
   display: inline-block;
   visibility: hidden;
   position: absolute;
@@ -82,6 +82,7 @@ mat-icon:hover {
 
 .task-description {
   width: 60%;
+  padding: 1%;
 }
 
 .task-action {
