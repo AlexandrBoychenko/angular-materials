@@ -26,6 +26,12 @@
   border-bottom: 1px solid #dcdcdc;
 }
 
+@media screen and (max-width: 768px) {
+  .example-container {
+    width: 90%;
+  }
+}
+
 .mat-sidenav-content {
   display: none;
 }
