@@ -17,9 +17,10 @@ div, p, a {
 
 .mat-input-element {
   height: 100%;
-  width: 100%;
   resize: inherit;
   overflow: auto;
+  padding-top: 16px;
+  padding-left: 16px;
 }
 
 .mat-drawer-inner-container {
