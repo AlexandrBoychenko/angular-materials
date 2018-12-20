@@ -3,5 +3,10 @@
   "version": "0.0.1",
   "dependencies": {
     "dominion": "git+https://github.com/yura-chaikovsky/dominion.git"
-  }
+  },
+  "scripts": {
+    "start": "node serverApi.js"
+  },
+  "author": "Dominion",
+  "license": "MIT"
 }

@@ -1,4 +1,4 @@
-version: '1'
+version: '3'
 services:
   api:
     container_name: "api"
@@ -7,28 +7,28 @@ services:
       dockerfile: "Dockerfile"
     restart: "always"
     ports:
-      - "127.0.0.1:3000:3000"
+      - "0.0.0.0:3000:3000"
     links:
       - "mysql"
 
   client:
-    container_name: "todo-list-app"
+    container_name: "client"
     build:
       context: "./todo-list-app"
       dockerfile: "Dockerfile"
     restart: "always"
     ports:
-      - "127.0.0.1:80:4200"
+      - "0.0.0.0:4200:4200"
 
   mysql:
     container_name: "mysql"
-    image: "mysql:5.7"
+    image: "mysql"
     restart: "always"
     environment:
       MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "todo
+      MYSQL_DATABASE: "todo"
       MYSQL_USER: "root"
       MYSQL_PASSWORD: "root"
     command: --character-set-server=utf8 --collation-server=utf8_general_ci
     ports:
-       - "127.0.0.1:3306:3306"
+       - "0.0.0.0:3306:3306"
