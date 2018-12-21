@@ -14,13 +14,16 @@ const httpOptions = {
 })
 
 export class HttpService{
-  url: string = 'http://localhost:3000/tasks';
+  hostName: string = location.hostname;
+  url: string = `http://${this.hostName}:3000/tasks`;
   headers: HttpHeaders = new HttpHeaders()
   .set("Content-Type",  "application/json");
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService){}
+    private messageService: MessageService){
+    console.log(this.hostName);
+  }
 
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);

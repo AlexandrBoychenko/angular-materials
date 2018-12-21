@@ -1,4 +1,4 @@
-version: '3'
+version: '3.6'
 services:
   api:
     container_name: api
@@ -29,6 +29,7 @@ services:
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PASSWORD: root
-    command: --init-file /data/application/init.sql
+    volumes:
+       - ./:/docker-entrypoint-initdb.d
     ports:
        - "3306:3306"
