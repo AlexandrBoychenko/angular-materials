@@ -5,9 +5,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService} from './messages.service';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +13,7 @@ const httpOptions = {
 export class HttpService{
   hostName: string = location.hostname;
   url: string = `http://${this.hostName}:3000/tasks`;
-  headers: HttpHeaders = new HttpHeaders()
-  .set("Content-Type",  "application/json");
+  headers = {headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
 
   constructor(
     private http: HttpClient,
@@ -40,7 +36,7 @@ export class HttpService{
   postData(tasks: Tasks): Observable<Tasks>{
 
     const body = this.stringify(tasks);
-    return this.http.post<Tasks>(this.url, body, httpOptions)
+    return this.http.post<Tasks>(this.url, body, this.headers)
       .pipe(
       tap((tasks: Tasks) => this.log(`added task w/ id=${tasks.id}`)),
       catchError(this.handleError<Tasks>('addTask'))
@@ -50,7 +46,7 @@ export class HttpService{
   putData(tasks: Tasks, id: number): Observable<Tasks>{
 
     const body = this.stringify(tasks);
-    return this.http.put<Tasks>(this.url + '/' + id, body, httpOptions)
+    return this.http.put<Tasks>(this.url + '/' + id, body, this.headers)
       .pipe(
         tap((tasks: Tasks) => this.log(`edited task w/ id=${tasks.id}`)),
         catchError(this.handleError<Tasks>('editTask'))
